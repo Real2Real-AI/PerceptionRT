@@ -30,7 +30,7 @@ Open Source for Real-Time 2D/3D Perception
 - [ ] Sensor Types
   - [ ] Single Camera based 2D Object Detection
   - [ ] Multi Camera based 3D Object Detection
-- [] Detection & Tracking
+- [ ] Detection & Tracking
   - [ ] Multi Frames based Detection
   - [ ] Tracking
 - [ ] Datasets
