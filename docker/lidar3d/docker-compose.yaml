@@ -1,26 +1,26 @@
 services:
   openpcdet:
-    image: openpcdet-centerpoint-dev
+    image: perception-rt-lidar3d-dev
     env_file:
       - .env
     build:
-      context: ./docker
+      context: ./
       dockerfile: Dockerfile
       args:
-        BASE_IMAGE: openpcdet-centerpoint-env
+        BASE_IMAGE: perception-rt-lidar3d-env
         HOST_UID: $HOST_UID
         HOST_GID: $HOST_GID
         HOST_USER: $HOST_USER
-    container_name: centerpointpillar
+    container_name: lidar3d-RT
     user: $HOST_UID:$HOST_GID
     volumes:
-      - .:/home/$HOST_USER/CenterPointPillar
+      - ../../:/home/$HOST_USER/perceptionRT
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.ssh:/home/$HOST_USER/.ssh
       - $HOME/.config:/home/$HOST_USER/.config
       - $HOME/.gitconfig:/home/$HOST_USER/.gitconfig
       - $HOME/Dataset:/Dataset
-    working_dir: /home/$HOST_USER/CenterPointPillar
+    working_dir: /home/$HOST_USER/perceptionRT
     environment:
       - DISPLAY=$DISPLAY
       - QT_X11_NO_MITSHM=1

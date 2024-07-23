@@ -5,8 +5,8 @@ You can either build the docker image through Dockerfile or pull the docker imag
 ## Build Through Dockerfile
 Build the docker base image.
 ```shell script
-cd CenterPointPillar
-docker build -f docker/env.Dockerfile -t openpcdet-centerpoint-env docker/
+cd PerceptionRT
+docker build -f docker/lidar3d/env.Dockerfile -t perception-rt-lidar3d-env docker/
 ```
 
 ## Container Start
@@ -16,17 +16,17 @@ docker build -f docker/env.Dockerfile -t openpcdet-centerpoint-env docker/
 ``` shell
 HOST_UID=1000
 HOST_GID=1000
-HOST_USER=lidar
+HOST_USER=lidar3d
 ```````
 - Create the container.
 ``` shell
-cd CenterPointPillar
+cd docker/lidar3d
 docker compose up --build -d
 ```
 
 - Execute the container
 ```
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
 ```
 
 - Get your GID, UID, and username in the container env 
@@ -35,7 +35,7 @@ docker exec -it centerpointpillar bash
 echo $(id -g)  
 # UID -> 1000
 echo $(id -u)
-# username -> lidar
+# username -> lidar3d
 echo $(id -un)
 ```
 
