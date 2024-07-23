@@ -1,30 +1,37 @@
 # PerceptionRT
 Open Source for Real-Time 2D/3D Perception
 
-## TODO List for Phase #1
+## Proceeding List for Phase #1 - lidar
+- [X] Sensor Types
+  - [X] Lidar based 3D Object Detection
+- [X] Datasets
+  - [X] Waymo
+- [X] Training
+  - [X] single GPU
+  - [X] multi GPUs
+- [X] Evaluation
+  - [X] mAP 
+- [X] Inference
+  - [X] pytorch
+    - [X] python
+    - [ ] c++
+  - [X] onnx
+    - [X] python
+    - [ ] c++ 
+  - [X] tensorRT
+    - [X] python
+    - [X] c++   
+    
+## TODO List for Phase #2
 - [ ] Sensor Types
-  - [ ] Lidar based 3D Object Detection
   - [ ] Single Camera based 2D Object Detection
   - [ ] Multi Camera based 3D Object Detection
 - [ ] Datasets
-  - [ ] Waymo
   - [ ] KITTI
   - [ ] nuScenes
 - [ ] Training
-  - [ ] single GPU
-  - [ ] multi GPUs
   - [ ] knowledge distillation
 - [ ] Evaluation
   - [ ] Precision / Recall / F1 measure
-  - [ ] mIOU / mAP / ...
+  - [ ] mIOU / ...
   - [ ] HOTA / MOTA / ...
-- [ ] Inference
-  - [ ] pytorch
-    - [ ] python
-    - [ ] c++
-  - [ ] onnx
-    - [ ] python
-    - [ ] c++ 
-  - [ ] tensorRT
-    - [ ] python
-    - [ ] c++-   
