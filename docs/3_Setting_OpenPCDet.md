@@ -8,7 +8,7 @@ docker exec -it centerpointpillar bash
 
 - Install OpenPCDet based CenterPointPillar
 ``` shell
-cd ~/CenterPointPillar
+cd ~/PerceptionRT
 sudo python setup.py develop
 ```
 

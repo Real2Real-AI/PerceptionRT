@@ -12,7 +12,7 @@
   - Unzip all the above `xxxx.tar` files to the directory of `data/waymo/raw_data` as follows (You could get 798 *train* tfrecord and 202 *val* tfrecord ):
 
 ```
-CenterPointPillar
+PerceptionRT
 ├── data
 │   ├── waymo
 │   │   │── ImageSets
@@ -91,11 +91,15 @@ python object_detection/datasets/waymo/waymo_dataset.py --func create_waymo_info
     --cfg_file tools/cfgs/dataset_configs/waymo_dataset_multiframe.yaml
 # Ignore 'CUDA_ERROR_NO_DEVICE' error as this process does not require GPU.
 ```
+  - for phase #1, if you want to train and test with small dataset, do it as follows:
+```shell
+python object_detection/datasets/waymo/waymo_dataset.py --func create_waymo_infos --cfg_file tools/cfgs/dataset_configs/waymo_dataset_refactoring.yaml
+```
 
 - If you already ran above commends and created waymo datasets, just link the files as below:
 ```shell
-cd ~/CenterPointPillar/data/waymo
-ln -s /Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/openpcdet_waymo_v_1_3_1_trainval/raw_data raw_data
+cd ~/PerceptionRT/data/waymo
+ln -s ~/Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/openpcdet_waymo_v_1_3_1_trainval/refactoring_raw_data raw_data
 ln -s /Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/waymo_data_org/waymo_processed_data_v0_5_0 waymo_processed_data_v0_5_0
 ln -s /Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/waymo_data_org/waymo_processed_data_v0_5_0_gt_database_train_sampled_1 waymo_processed_data_v0_5_0_gt_database_train_sampled_1
 
