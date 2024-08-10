@@ -15,7 +15,7 @@ venv/
 *.npy
 *.zip
 *.bin
-output
+output/
 version.py
 *.onnx
 *.trt
