@@ -14,7 +14,8 @@ except:
 import numpy as np
 import torch
 
-from pcdet.config import cfg, cfg_from_yaml_file
+# from pcdet.config import cfg, cfg_from_yaml_file
+from general.config.config import cfg, cfg_from_yaml_file
 from object_detection.detectors3d import build_network
 from general.utilities.data_utils import load_data_to_gpu
 # from pcdet.utils import common_utils

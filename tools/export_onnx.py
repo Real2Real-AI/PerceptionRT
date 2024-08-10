@@ -1,4 +1,5 @@
 import _init_path
+import os
 import argparse
 import torch
 import onnx
@@ -8,10 +9,16 @@ from pathlib import Path
 
 from torch.ao.quantization import fuse_modules
 
-from pcdet.config import cfg, cfg_from_yaml_file
-from pcdet.models import build_network
-from pcdet.utils import common_utils
-from pcdet.datasets import DatasetTemplate
+# from pcdet.config import cfg, cfg_from_yaml_file
+# from pcdet.models import build_network
+# from pcdet.utils import common_utils
+# from pcdet.datasets import DatasetTemplate
+
+from general.config.config import cfg, cfg_from_yaml_file
+from object_detection.detectors3d import build_network
+from general.utilities import common_utils
+from general.datasets.dataset_template import DatasetTemplate
+# from general.utilities.data_utils import load_data_to_gpu
 from modify_onnx import pillarscatter_surgeon
 
 class DummyDataset(DatasetTemplate):
@@ -101,7 +108,7 @@ def convert_onnx():
 
     logger.info("Model exported to model.onnx")
 
-def export_config():
+def export_config(save_dir):
     centerpoint_dict = {}
     centerpoint_dict['max_points'] = 200000
     centerpoint_dict['pub'] = "/centerpoint/boxes"
@@ -142,7 +149,9 @@ def export_config():
     postprocess_dict['min_x_range'] = voxelization_dict['min_range']['x']
     postprocess_dict['min_y_range'] = voxelization_dict['min_range']['y']
 
-    save_path = Path("../") / "config.yaml"
+    # save_path = Path("../") / "config.yaml"
+    save_path = save_dir / "config.yaml"
+
     cfg_output = {'centerpoint': centerpoint_dict,
                     'voxelization': voxelization_dict,
                     'postprocess': postprocess_dict}
@@ -153,12 +162,17 @@ def export_config():
 if __name__ == '__main__':
     args, cfg = parse_config()
 
-    save_dir = Path("../onnx")
+    python_file_path = os.path.dirname(os.path.abspath(__file__))
+    print(python_file_path)
+
+    # save_dir = Path("{}/onnx")
+    save_dir = Path(os.path.abspath(os.path.join(python_file_path, '../', 'onnx')))
+    if not save_dir.exists():
+        save_dir.mkdir(parents=True)
+
     onnx_raw_path = save_dir / "model_raw.onnx"
     onnx_sim_path = save_dir / "model_sim.onnx"
     onnx_path = save_dir / "model.onnx"
-    if not save_dir.exists():
-        save_dir.mkdir(parents=True)
 
     if not onnx_sim_path.exists():
         print("Exporting model to ONNX...")
@@ -171,4 +185,4 @@ if __name__ == '__main__':
         onnx.save(modified_model, onnx_path)
         print("Model exported to model.onnx")
 
-    export_config()
+    export_config(save_dir=save_dir)

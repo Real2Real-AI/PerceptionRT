@@ -14,13 +14,13 @@ services:
     container_name: lidar3d-RT
     user: $HOST_UID:$HOST_GID
     volumes:
-      - ../../:/home/$HOST_USER/perceptionRT
+      - ../../:/home/$HOST_USER/PerceptionRT
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.ssh:/home/$HOST_USER/.ssh
       - $HOME/.config:/home/$HOST_USER/.config
       - $HOME/.gitconfig:/home/$HOST_USER/.gitconfig
       - $HOME/Dataset:/Dataset
-    working_dir: /home/$HOST_USER/perceptionRT
+    working_dir: /home/$HOST_USER/PerceptionRT
     environment:
       - DISPLAY=$DISPLAY
       - QT_X11_NO_MITSHM=1
