@@ -9,7 +9,7 @@ docker exec -it centerpointpillar bash
 - Install OpenPCDet based CenterPointPillar
 ``` shell
 cd ~/PerceptionRT
-sudo python setup.py develop
+python setup.py develop # sudo python setup.py develop
 ```
 
 - To Build Python module, you have to install and wrap the c++ to python API.
