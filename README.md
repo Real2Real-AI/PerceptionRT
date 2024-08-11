@@ -25,6 +25,9 @@ Open Source for Real-Time 2D/3D Perception
     - [X] c++
 - [X] 2D/3D Visualization
   - [X] ROS2 Rviz 
+- [X] Code Refactoring
+  - [X] python codes
+  - [ ] centerpoint cuda, cpp, python for ros2 and pybind11 
     
 ## TODO List for Next Phases
 - [ ] Sensor Types
