@@ -64,8 +64,7 @@ target_link_libraries(cp PRIVATE
   ${YAML_CPP_LIBRARIES}
   stdc++fs
 )
-copy_output(cp ../../../object_detection)
-copy_output(cp ../)
+copy_output(cp ../../tools)
 
 add_executable(npy_forward
   npy_forward.cc

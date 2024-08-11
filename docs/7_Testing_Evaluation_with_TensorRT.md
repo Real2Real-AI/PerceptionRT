@@ -1,11 +1,18 @@
 
 ## Evaluation with TensorRT model
 ``` shell
-docker exec -it centerpointpillar bash
-cd ~/CenterPointPillar/tools/
-python test.py --cfg_file cfgs/waymo_models/centerpoint_pillar_inference.yaml --TensorRT
-```
+cd ~/PerceptionRT
+python object_detection/test.py --cfg_file {fullpath/config.yaml} --TensorRT
 
+# local
+cd ~/PerceptionRT
+python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT 
+
+# docker
+docker exec -it lidar3d-RT bash
+cd ~/PerceptionRT
+python object_detection/test.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT
+```
 - Results as shown:
 ```
 2024-07-07 05:33:34,115   INFO  

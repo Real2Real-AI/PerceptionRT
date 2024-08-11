@@ -236,12 +236,16 @@ def main():
     )
 
     if args.TensorRT:
-        # model_path = "{}/PerceptionRT/centerpoint/model/model.trt".format(os.path.expanduser('~'))
-        # config_path = "{}/PerceptionRT/centerpoint/config/config.yaml".format(os.path.expanduser('~'))
         python_file_path = os.path.dirname(os.path.abspath(__file__))
         onnx_dir = Path(os.path.abspath(os.path.join(python_file_path, '../', 'onnx')))
-        model_path = "{}/PerceptionRT/onnx/model.trt".format(onnx_dir)
-        config_path = "{}/PerceptionRT/onnx/config.yaml".format(onnx_dir)
+        print('onnx_dir: ', onnx_dir)
+
+        model_path = "{}/model.trt".format(onnx_dir)
+        config_path = "{}/config.yaml".format(onnx_dir)
+
+        print('config_path: ', config_path)
+        print('model_path: ', model_path)
+
         model = cp.CenterPoint(config_path, model_path)
         print("**********************************************************************")
         print("************************** load tensorRT *****************************")

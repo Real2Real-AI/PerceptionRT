@@ -1,5 +1,6 @@
 import os 
-from tools import cp
+# from tools import cp
+import cp
 from glob import glob
 import numpy as np
 

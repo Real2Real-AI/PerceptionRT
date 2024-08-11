@@ -33,14 +33,15 @@ sh scripts/slurm_test_mgpu.sh ${PARTITION} ${NUM_GPUS} \
 
 ### 2. Evaluation with a pytorch model
 ``` shell
-docker exec -it lidar3d-RT bash
-cd ~/PerceptionRT
 python object_detection/test.py --cfg_file tools/cfgs/waymo_models/centerpoint_pillar_inference.yaml --ckpt /home/lidar/CenterPointPillar/ckpt/checkpoint_epoch_24.pth
 
 # local
+cd ~/PerceptionRT
 python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/ckpt/checkpoint_epoch_24.pth
 
 # docker
+docker exec -it lidar3d-RT bash
+cd ~/PerceptionRT
 python object_detection/test.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/lidar3d/PerceptionRT/ckpt/checkpoint_epoch_24.pth
 ```
 
@@ -72,7 +73,6 @@ OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/AP: 0.3141
 OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/APH: 0.2625 
 OBJECT_TYPE_TYPE_CYCLIST_LEVEL_2/APL: 0.3141 
 ```
-
 - If you set `test: 25000` of `MAX_NUMBER_OF_VOXELS` at the `cfgs/waymo_models/centerpoint_pillar_inference.yaml` like TensorRT (`centerpoint/config.yaml`),
 - You can get more similar results as shown:
 ```
