@@ -108,6 +108,15 @@ ln -s /Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/waymo_data_org/waymo_pro
 ln -s /Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/waymo_data_org/waymo_processed_data_v0_5_0_infos_val.pkl waymo_processed_data_v0_5_0_infos_val.pkl
 ln -s /Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/waymo_data_org/waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1.pkl waymo_processed_data_v0_5_0_waymo_dbinfos_train_sampled_1.pkl
 ```
+on the local
+```shell
+ln -s ~/Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/openpcdet_waymo_v_1_3_1_trainval raw_data
+```
+
+on the Docker
+```shell
+ln -s /Dataset/HDD8TB/Datasets/Waymo/Perception_Dataset/openpcdet_waymo_v_1_3_1_trainval raw_data
+```
 Note that you do not need to install `waymo-open-dataset` if you have already processed the data before and do not need to evaluate with official Waymo Metrics.
 
 ## [Return to the main page.](../README.md)

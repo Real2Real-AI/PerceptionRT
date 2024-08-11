@@ -33,9 +33,15 @@ sh scripts/slurm_test_mgpu.sh ${PARTITION} ${NUM_GPUS} \
 
 ### 2. Evaluation with a pytorch model
 ``` shell
-docker exec -it centerpoint bash
-cd ~/CenterPointPillar
+docker exec -it lidar3d-RT bash
+cd ~/PerceptionRT
 python object_detection/test.py --cfg_file tools/cfgs/waymo_models/centerpoint_pillar_inference.yaml --ckpt /home/lidar/CenterPointPillar/ckpt/checkpoint_epoch_24.pth
+
+# local
+python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/ckpt/checkpoint_epoch_24.pth
+
+# docker
+python object_detection/test.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/lidar3d/PerceptionRT/ckpt/checkpoint_epoch_24.pth
 ```
 
 - Results as shown:

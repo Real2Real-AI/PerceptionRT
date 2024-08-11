@@ -13,7 +13,7 @@ python tools/export_onnx.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/Per
 ```
 <img src="./sources/cmd_onnx.png" align="center" width="100%">
 
-- As a result, create 3 onnx files on the `CenterPointPillar/onnx`
+- As a result, create 3 onnx files on the `PerceptionRT/onnx`
   - model_raw.onnx: pth를 onnx 로 변환한 순수 버전
   - model_sim.onnx: onnx 그래프 간단화해주는 라이브러리 사용한 버전
   - model.onnx: sim 모델을 gragh surgeon으로 수정한 최종 버전, tensorRT plugin 사용하려면 gragh surgeon이 필수임.

@@ -3,7 +3,7 @@
 
 - Execute the container
 ```
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
 ```
 
 - Install OpenPCDet based CenterPointPillar

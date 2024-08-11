@@ -47,7 +47,9 @@ include_directories(
   include
   ${PCL_INCLUDE_DIRS}
   ${CUDA_INCLUDE_DIRS}
-  ${TensorRT_INCLUDE_DIRS}
+  #${TensorRT_INCLUDE_DIRS}
+  /home/hyunkoo/TensorRT-8.6.1.6/include
+  /home/hyunkoo/TensorRT-8.6.1.6/lib
   ${YAML_CPP_INCLUDE_DIRS}
 )
 

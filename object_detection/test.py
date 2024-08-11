@@ -1,8 +1,13 @@
 # import _init_path
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# sys.path.insert(0, '../../')
+
 import argparse
 import datetime
 import glob
-import os
 import re
 import time
 from pathlib import Path
@@ -231,8 +236,12 @@ def main():
     )
 
     if args.TensorRT:
-        model_path = "{}/CenterPointPillar/centerpoint/model/model.trt".format(os.path.expanduser('~'))
-        config_path = "{}/CenterPointPillar/centerpoint/config/config.yaml".format(os.path.expanduser('~'))
+        # model_path = "{}/PerceptionRT/centerpoint/model/model.trt".format(os.path.expanduser('~'))
+        # config_path = "{}/PerceptionRT/centerpoint/config/config.yaml".format(os.path.expanduser('~'))
+        python_file_path = os.path.dirname(os.path.abspath(__file__))
+        onnx_dir = Path(os.path.abspath(os.path.join(python_file_path, '../', 'onnx')))
+        model_path = "{}/PerceptionRT/onnx/model.trt".format(onnx_dir)
+        config_path = "{}/PerceptionRT/onnx/config.yaml".format(onnx_dir)
         model = cp.CenterPoint(config_path, model_path)
         print("**********************************************************************")
         print("************************** load tensorRT *****************************")

@@ -24,7 +24,7 @@ set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_89,code=sm_89") 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 find_package(pybind11 REQUIRED)
 find_package(CUDA REQUIRED)
-find_package(TensorRT REQUIRED)
+#find_package(TensorRT REQUIRED)
 find_package(YAML-CPP REQUIRED)
 find_package(PythonLibs REQUIRED)
 
@@ -40,7 +40,8 @@ endfunction()
 include_directories(
   include
   ${CUDA_INCLUDE_DIRS}
-  ${TensorRT_INCLUDE_DIRS}
+  #${TensorRT_INCLUDE_DIRS}
+  /home/hyunkoo/TensorRT-8.6.1.6/include
   ${YAML_CPP_INCLUDE_DIRS}
   ${PYTHON_INCLUDE_DIRS}
 )
@@ -59,7 +60,8 @@ pybind11_add_module(cp MODULE
 target_link_libraries(cp PRIVATE
   ${PCL_LIBRARIES}
   ${CUDA_LIBRARIES}
-  ${TensorRT_LIBRARIES}
+  #${TensorRT_LIBRARIES}
+  /home/hyunkoo/TensorRT-8.6.1.6/lib
   ${YAML_CPP_LIBRARIES}
   stdc++fs
 )
@@ -80,7 +82,8 @@ add_executable(npy_forward
 target_link_libraries(npy_forward
   ${PCL_LIBRARIES}
   ${CUDA_LIBRARIES}
-  ${TensorRT_LIBRARIES}
+  #${TensorRT_LIBRARIES}
+  /home/hyunkoo/TensorRT-8.6.1.6/lib
   ${YAML_CPP_LIBRARIES}
   ${PYTHON_LIBRARIES}
   stdc++fs
