@@ -27,7 +27,14 @@ Open Source for Real-Time 2D/3D Perception
   - [X] ROS2 Rviz 
 - [X] Code Refactoring
   - [X] python codes
-  - [ ] centerpoint cuda, cpp, python for ros2 and pybind11 
+
+## Proceeding List for Phase #2 - lidar (Centerpoint-pillar)
+- [X] Code Refactoring
+  - [ ] Remove and clean up duplicate files and codes in the `centerpoint` (cuda, cpp, python) codes for ros2 and pybind11
+  - [ ] cleaning all codes
+  - [ ] add description
+  - [ ] add test codes
+
     
 ## TODO List for Next Phases
 - [ ] Sensor Types
