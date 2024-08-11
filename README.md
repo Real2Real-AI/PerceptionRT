@@ -29,7 +29,7 @@ Open Source for Real-Time 2D/3D Perception
   - [X] python codes
 
 ## Proceeding List for Phase #2 - lidar (Centerpoint-pillar)
-- [X] Code Refactoring
+- [ ] Code Refactoring
   - [ ] Remove and clean up duplicate files and codes in the `centerpoint` (cuda, cpp, python) codes for ros2 and pybind11
   - [ ] cleaning all codes
   - [ ] add description
