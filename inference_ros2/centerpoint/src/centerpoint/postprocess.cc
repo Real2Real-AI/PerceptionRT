@@ -106,8 +106,13 @@ int PostProcess::forward(const float* reg, const float* height, const float* dim
   return boxes_post_nms_.size();
 }
 
-std::vector<Box>* PostProcess::getBoxes()
+std::vector<Box>* PostProcess::getBoxesPointer()
 {
   return &boxes_post_nms_;
+}
+
+std::vector<Box> PostProcess::getBoxes()
+{
+  return boxes_post_nms_;
 }
 

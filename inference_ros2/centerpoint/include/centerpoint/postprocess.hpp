@@ -43,7 +43,8 @@ PostProcess(const YAML::Node& config);
 int forward(const float* reg, const float* height, const float* dim, const float* rot,
             const float* score, const int32_t* cls, const float* iou,
             void * stream);
-std::vector<Box>* getBoxes();
+std::vector<Box>* getBoxesPointer();
+std::vector<Box> getBoxes();
 
 private:
 void memoryInit();

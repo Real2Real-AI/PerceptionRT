@@ -23,7 +23,7 @@ from object_detection.datasets import build_dataloader
 from object_detection.detectors3d import build_network
 
 try:
-    import cp
+    import pycenterpoint as cp
 
     print("Pybind imported!!")
 except:
@@ -246,7 +246,7 @@ def main():
         print('config_path: ', config_path)
         print('model_path: ', model_path)
 
-        model = cp.CenterPoint(config_path, model_path)
+        model = cp.PyCenterPoint(config_path, model_path)
         print("**********************************************************************")
         print("************************** load tensorRT *****************************")
         print("**********************************************************************")

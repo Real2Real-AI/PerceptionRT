@@ -48,29 +48,27 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
   ${CUDA_INCLUDE_DIRS}
   ${TensorRT_INCLUDE_DIRS}
-  #/home/hyunkoo/TensorRT-8.6.1.6/include
-  #/home/hyunkoo/TensorRT-8.6.1.6/lib
   ${YAML_CPP_INCLUDE_DIRS}
 )
 
-add_executable(centerpoint_node
-  src/main.cc
-  src/centerpoint/centerpoint.cc
-  src/centerpoint/network.cc
-  src/centerpoint/voxelization.cu
-  src/centerpoint/voxelization.cc
-  src/centerpoint/postprocess.cu
-  src/centerpoint/postprocess.cc
-  src/pillarscatter/pillarscatter-kernel.cu
-  src/pillarscatter/pillarscatter.cc
-)
-
-target_link_libraries(centerpoint_node
+set(THIRD_PARTY_LIBS
   ${PCL_LIBRARIES}
   ${CUDA_LIBRARIES}
   ${TensorRT_LIBRARIES}
   ${YAML_CPP_LIBRARIES}
   stdc++fs
+)
+
+add_subdirectory(src)
+
+add_executable(centerpoint_node
+  src/main.cc
+  src/ros2/detector.cc
+)
+
+target_link_libraries(centerpoint_node
+  centerpoint
+  ${THIRD_PARTY_LIBS}
 )
 
 ament_target_dependencies(centerpoint_node

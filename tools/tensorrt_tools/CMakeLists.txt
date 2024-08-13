@@ -39,51 +39,53 @@ endfunction()
 
 include_directories(
   include
+  ../../inference_ros2/centerpoint/include
   ${PYTHON_INCLUDE_DIRS}
   ${CUDA_INCLUDE_DIRS}
   ${TensorRT_INCLUDE_DIRS}
   ${YAML_CPP_INCLUDE_DIRS}
   ${PYTHON_INCLUDE_DIRS}
+
 )
 
-pybind11_add_module(cp MODULE
+set(THIRD_PARTY_LIBS
+  ${PCL_LIBRARIES}
+  ${CUDA_LIBRARIES}
+  ${TensorRT_LIBRARIES}
+  ${YAML_CPP_LIBRARIES}
+  stdc++fs
+)
+
+add_subdirectory(../../inference_ros2/centerpoint/src ${CMAKE_BINARY_DIR}/build)
+
+pybind11_add_module(pycenterpoint MODULE
   module.cc
-  src/pycenterpoint/centerpoint.cc
-  src/pycenterpoint/network.cc
-  src/pycenterpoint/voxelization.cu
-  src/pycenterpoint/voxelization.cc
-  src/pycenterpoint/postprocess.cu
-  src/pycenterpoint/postprocess.cc
-  src/pillarscatter/pillarscatter-kernel.cu
-  src/pillarscatter/pillarscatter.cc)
-
-target_link_libraries(cp PRIVATE
-  ${PCL_LIBRARIES}
-  ${CUDA_LIBRARIES}
-  ${TensorRT_LIBRARIES}
-  ${YAML_CPP_LIBRARIES}
-  stdc++fs
-)
-copy_output(cp ../../../object_detection)
-copy_output(cp ../)
-
-add_executable(npy_forward
-  npy_forward.cc
-  src/pycenterpoint/centerpoint.cc
-  src/pycenterpoint/network.cc
-  src/pycenterpoint/voxelization.cu
-  src/pycenterpoint/voxelization.cc
-  src/pycenterpoint/postprocess.cu
-  src/pycenterpoint/postprocess.cc
-  src/pillarscatter/pillarscatter-kernel.cu
-  src/pillarscatter/pillarscatter.cc
 )
 
-target_link_libraries(npy_forward
-  ${PCL_LIBRARIES}
-  ${CUDA_LIBRARIES}
-  ${TensorRT_LIBRARIES}
-  ${YAML_CPP_LIBRARIES}
-  ${PYTHON_LIBRARIES}
-  stdc++fs
+target_link_libraries(pycenterpoint PRIVATE
+  centerpoint
+  ${THIRD_PARTY_LIBS}
 )
+copy_output(pycenterpoint ../../object_detection)
+# copy_output(cp ../)
+
+# add_executable(npy_forward
+#   npy_forward.cc
+#   src/pycenterpoint/centerpoint.cc
+#   src/pycenterpoint/network.cc
+#   src/pycenterpoint/voxelization.cu
+#   src/pycenterpoint/voxelization.cc
+#   src/pycenterpoint/postprocess.cu
+#   src/pycenterpoint/postprocess.cc
+#   src/pillarscatter/pillarscatter-kernel.cu
+#   src/pillarscatter/pillarscatter.cc
+# )
+
+# target_link_libraries(npy_forward
+#   ${PCL_LIBRARIES}
+#   ${CUDA_LIBRARIES}
+#   ${TensorRT_LIBRARIES}
+#   ${YAML_CPP_LIBRARIES}
+#   ${PYTHON_LIBRARIES}
+#   stdc++fs
+# )
