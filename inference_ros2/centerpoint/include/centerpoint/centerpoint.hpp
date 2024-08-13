@@ -1,12 +1,6 @@
 #ifndef _CENTERPOINT_HPP_
 #define _CENTERPOINT_HPP_
 
-// #include <rclcpp/rclcpp.hpp>
-// #include <sensor_msgs/msg/point_cloud2.hpp>
-// #include <visualization_msgs/msg/marker_array.hpp>
-// #include <tf2/LinearMath/Quaternion.h>
-// #include <geometry_msgs/msg/quaternion.hpp>
-// #include <pcl_conversions/pcl_conversions.h>
 #include <string>
 #include <algorithm>
 #include <random>
@@ -27,20 +21,10 @@ public:
 
 private:
   void memoryInit(const std::string& model_path);
-  // size_t getPoints(const pcl::PointCloud<pcl::PointXYZI>::Ptr& pcl_cloud);
-  // void callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg);
-  // void pubishBoxes();
 
 
 private:
-  // ROS2 & Config
-  // rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_;
-  // rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_;
   YAML::Node config_;
-
-  // PCL Library
-  // pcl::PointCloud<pcl::PointXYZI>::Ptr pcl_cloud_;
-  // std::minstd_rand0 rng_ = std::default_random_engine{};
 
   // CenterPoint Pipeline
   std::shared_ptr<Voxelization> voxelization_ = nullptr;
@@ -57,7 +41,6 @@ private:
   cudaStream_t stream_;
 
   // Output
-  float score_threshold_;
   std::vector<Box>* boxes_;
 
 
