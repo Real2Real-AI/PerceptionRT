@@ -3,7 +3,6 @@
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 
-// #include "pycenterpoint/centerpoint.hpp"
 #include "centerpoint/wrapper.hpp"
 
 namespace py = pybind11;

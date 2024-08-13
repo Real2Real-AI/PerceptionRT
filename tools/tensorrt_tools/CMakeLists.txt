@@ -16,10 +16,6 @@ set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_61,code=sm_61")
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_80,code=sm_80") # A100
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_89,code=sm_89") # RTX4090
 
-# if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-#   add_compile_options(-Wall -Wextra -Wpedantic)
-# endif()
-
 # find dependencies
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 find_package(pybind11 REQUIRED)
@@ -60,6 +56,7 @@ add_subdirectory(../../inference_ros2/centerpoint/src ${CMAKE_BINARY_DIR}/build)
 
 pybind11_add_module(pycenterpoint MODULE
   module.cc
+  src/centerpoint/wrapper.cc
 )
 
 target_link_libraries(pycenterpoint PRIVATE
@@ -67,25 +64,3 @@ target_link_libraries(pycenterpoint PRIVATE
   ${THIRD_PARTY_LIBS}
 )
 copy_output(pycenterpoint ../../object_detection)
-# copy_output(cp ../)
-
-# add_executable(npy_forward
-#   npy_forward.cc
-#   src/pycenterpoint/centerpoint.cc
-#   src/pycenterpoint/network.cc
-#   src/pycenterpoint/voxelization.cu
-#   src/pycenterpoint/voxelization.cc
-#   src/pycenterpoint/postprocess.cu
-#   src/pycenterpoint/postprocess.cc
-#   src/pillarscatter/pillarscatter-kernel.cu
-#   src/pillarscatter/pillarscatter.cc
-# )
-
-# target_link_libraries(npy_forward
-#   ${PCL_LIBRARIES}
-#   ${CUDA_LIBRARIES}
-#   ${TensorRT_LIBRARIES}
-#   ${YAML_CPP_LIBRARIES}
-#   ${PYTHON_LIBRARIES}
-#   stdc++fs
-# )
