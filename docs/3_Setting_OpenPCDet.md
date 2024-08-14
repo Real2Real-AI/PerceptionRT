@@ -23,7 +23,7 @@ sudo make install
 pip install --upgrade pip
 sudo apt install python3-testresources
 
-cd ~/CenterPointPillar/centerpoint/pybind
+cd ~/PerceptionRT/inference_ros2/centerpoint
 cmake -BRelease
 cmake --build Release
 ```

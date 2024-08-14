@@ -59,8 +59,24 @@ set(THIRD_PARTY_LIBS
   stdc++fs
 )
 
-add_subdirectory(src)
+# src 폴더의 라이브러리 추가
+add_library(centerpoint SHARED
+  src/centerpoint/centerpoint.cc
+  src/centerpoint/network.cc
+  src/centerpoint/voxelization.cu
+  src/centerpoint/voxelization.cc
+  src/centerpoint/postprocess.cu
+  src/centerpoint/postprocess.cc
+  src/pillarscatter/pillarscatter-kernel.cu
+  src/pillarscatter/pillarscatter.cc
+)
 
+# 라이브러리 링크 설정
+target_link_libraries(centerpoint
+  ${THIRD_PARTY_LIBS}
+)
+
+# 실행 파일 추가 및 설정
 add_executable(centerpoint_node
   src/main.cc
   src/ros2/detector.cc
@@ -77,19 +93,20 @@ ament_target_dependencies(centerpoint_node
   "visualization_msgs"
   "pcl_conversions")
 
+# 설치 설정
 install(TARGETS centerpoint_node
   DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch
-DESTINATION share/${PROJECT_NAME}
+  DESTINATION share/${PROJECT_NAME}
 )
 
 install(DIRECTORY config
-DESTINATION share/${PROJECT_NAME}
+  DESTINATION share/${PROJECT_NAME}
 )
 
 install(DIRECTORY model
-DESTINATION share/${PROJECT_NAME}
+  DESTINATION share/${PROJECT_NAME}
 )
 
 ament_package()
