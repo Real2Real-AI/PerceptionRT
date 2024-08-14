@@ -13,8 +13,8 @@ def generate_launch_description():
             Node(package=package_name,
                  executable="centerpoint_node",
                  name="centerpoint_node",
-                 parameters=[{"config_path": src_directory+"/config/config.yaml",
-                              "model_path": src_directory+"/model/model.trt"}],
+                 parameters=[{"config_path": src_directory+"/models/config.yaml",
+                              "model_path": src_directory+"/models/model.trt"}],
                  output="screen",),
         ]
     )

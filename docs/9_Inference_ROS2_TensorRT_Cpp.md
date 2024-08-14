@@ -19,16 +19,20 @@ sudo pip install transforms3d -y
 
 ### 2. Build the ROS2 package of centerpoint c++ Node in your ROS2 workspace.
 ``` shell
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
 cd ~/ && mkdir -p ros2_ws/src && cd ros2_ws/ && colcon build --symlink-install
-cd src && ln -s ~/PerceptionRT/inference_ros2/centerpoint/ .
+cd src && ln -s ~/PerceptionRT/tools/ros2/centerpoint/ .
+
 
 ```
-- If not exist `centerpoint/model`, copy `onnx` file.
+- If not exist `centerpoint/models`, copy `onnx` file.
 ``` shell
-cd centerpoint && mkdir model
-cd model
-ln -s ~/CenterPointPillar/onnx/model.onnx model.onnx
+cd centerpoint && mkdir models
+cd models
+ln -s ~/PerceptionRT/onnx/config.yaml config.yaml
+ln -s ~/PerceptionRT/onnx/model.onnx model.onnx  
+
+ln -s ~/PerceptionRT/onnx/model.onnx model.onnx
 ```
 - Build the ROS2 package of centerpoint c++ Node in your ROS2 workspace.
 ``` shell

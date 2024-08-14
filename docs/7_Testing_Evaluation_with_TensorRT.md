@@ -6,7 +6,8 @@ python object_detection/test.py --cfg_file {fullpath/config.yaml} --TensorRT
 
 # local
 cd ~/PerceptionRT
-python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT 
+python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT
+python test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT 
 
 # docker
 docker exec -it lidar3d-RT bash

@@ -27,21 +27,21 @@ sudo pip install transforms3d -y
 
 ### 3. ROS2 play bagfile on the container
 ```
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
 cd /Dataset
 ros2 bag play segment-10359308928573410754_720_000_740_000_with_camera_labels/  # ros2 bag play folder_with_ros2bag
 ```
 
 ### 4. Run ros2_demo.py on the container
 ``` shell
-docker exec -it centerpointpillar bash
-cd ~/CenterPointPillar/tools/
+docker exec -it lidar3d-RT bash
+cd ~/PerceptionRT/tools/
 python ros2_demo.py --cfg_file cfgs/waymo_models/centerpoint_pillar_inference.yaml --ckpt ../ckpt/checkpoint_epoch_24.pth
 ```
 
 ### 5. Run rviz2
 ``` shell
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
 rviz2
 ```
 

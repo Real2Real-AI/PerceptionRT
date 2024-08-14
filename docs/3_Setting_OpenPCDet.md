@@ -23,7 +23,7 @@ sudo make install
 pip install --upgrade pip
 sudo apt install python3-testresources
 
-cd ~/PerceptionRT/inference_ros2/centerpoint
+cd ~/PerceptionRT/tools/tensorrt
 cmake -BRelease
 cmake --build Release
 ```
