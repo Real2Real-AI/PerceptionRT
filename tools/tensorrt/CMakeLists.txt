@@ -15,6 +15,8 @@ endif()
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_61,code=sm_61")
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_80,code=sm_80") # A100
 set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_89,code=sm_89") # RTX4090
+#set(PYTHON_INCLUDE_DIR "/usr/include/python3.8")
+#set(PYTHON_LIBRARIES "/usr/lib/x86_64-linux-gnu/libpython3.8.so")
 
 # Find dependencies
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -22,6 +24,7 @@ find_package(pybind11 REQUIRED)
 find_package(CUDA REQUIRED)
 find_package(TensorRT REQUIRED)
 find_package(YAML-CPP REQUIRED)
+#find_package(PythonLibs REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
 function(copy_output target_name to_path)
@@ -51,7 +54,7 @@ set(THIRD_PARTY_LIBS
 
 #add_subdirectory(../ros2/centerpoint/src ${CMAKE_BINARY_DIR}/build)
 
-# Add the source files directly
+# Add the centerpoint source files directly
 set(CENTERPOINT_SRCS
   ../ros2/centerpoint/src/centerpoint/centerpoint.cc
   ../ros2/centerpoint/src/centerpoint/network.cc
@@ -62,20 +65,17 @@ set(CENTERPOINT_SRCS
   ../ros2/centerpoint/src/pillarscatter/pillarscatter-kernel.cu
   ../ros2/centerpoint/src/pillarscatter/pillarscatter.cc
 )
-# Define the centerpoint library
-add_library(centerpoint SHARED ${CENTERPOINT_SRCS})
 
+# Create the pycenterpoint module and add centerpoint source files directly
 pybind11_add_module(pycenterpoint MODULE
   module.cc
   src/centerpoint/wrapper.cc
+  ${CENTERPOINT_SRCS} # Add centerpoint source files directly to pycenterpoint
 )
 
 target_link_libraries(pycenterpoint PRIVATE
-  centerpoint
   ${THIRD_PARTY_LIBS}
+  Python3::Python
 )
-
-# Python3 library is already included in THIRD_PARTY_LIBS by default
-target_link_libraries(pycenterpoint PRIVATE Python3::Python)
 
 copy_output(pycenterpoint ../../object_detection)

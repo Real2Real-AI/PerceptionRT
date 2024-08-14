@@ -1,3 +1,9 @@
+## Install python-wrapped centerpoint for tensorRT.
+``` shell
+cd ~/PerceptionRT/tools/tensorrt
+cmake -BRelease
+cmake --build Release
+```
 
 ## (Python) Inference a model with TensorRT on ROS2 Node
 

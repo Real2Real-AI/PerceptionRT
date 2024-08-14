@@ -12,7 +12,7 @@ cd ~/PerceptionRT
 python setup.py develop # sudo python setup.py develop
 ```
 
-- To Build Python module, you have to install and wrap the c++ to python API.
+## To Build Python module, you have to install and wrap the c++ to python API.
 ``` shell
 cd ~/
 git clone https://github.com/pybind/pybind11.git
@@ -22,7 +22,10 @@ sudo make install
 
 pip install --upgrade pip
 sudo apt install python3-testresources
+```
 
+## Install python-wrapped centerpoint for tensorRT.
+``` shell
 cd ~/PerceptionRT/tools/tensorrt
 cmake -BRelease
 cmake --build Release
