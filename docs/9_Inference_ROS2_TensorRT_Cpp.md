@@ -21,7 +21,8 @@ sudo pip install transforms3d -y
 ``` shell
 docker exec -it centerpointpillar bash
 cd ~/ && mkdir -p ros2_ws/src && cd ros2_ws/ && colcon build --symlink-install
-cd src && ln -s ~/CenterPointPillar/centerpoint .
+cd src && ln -s ~/PerceptionRT/inference_ros2/centerpoint/ .
+
 ```
 - If not exist `centerpoint/model`, copy `onnx` file.
 ``` shell
@@ -37,7 +38,8 @@ source ~/ros2_ws/install/setup.bash
 
 ### 3. Run the ROS2 Node.
 ``` shell
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch centerpoint centerpoint.launch.py
 ```
 
@@ -45,14 +47,14 @@ ros2 launch centerpoint centerpoint.launch.py
 
 ### 4. ROS2 play bagfile on the container
 ```
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
 cd /Dataset
 ros2 bag play segment-10359308928573410754_720_000_740_000_with_camera_labels/  # ros2 bag play folder_with_ros2bag
 ```
 
 ### 5. Run rviz2
 ``` shell
-docker exec -it centerpointpillar bash
+docker exec -it lidar3d-RT bash
 rviz2
 ```
 - Fixed Frame: base_link
