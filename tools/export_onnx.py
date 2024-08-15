@@ -1,5 +1,8 @@
-import _init_path
+#import _init_path
 import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import argparse
 import torch
 import onnx
@@ -41,6 +44,7 @@ def parse_config():
                         help='specify the point cloud data file or directory')
     parser.add_argument('--ckpt', type=str, default='../ckpts/waymo_iou_branch.pth', help='specify the pretrained model')
     parser.add_argument('--max_voxels', type=int, default='25000', help='specify max number of voxels')
+    parser.add_argument('--save_dir', type=str, default=None, help='specify directory for saving onnx model')
 
     args = parser.parse_args()
 
@@ -162,11 +166,17 @@ def export_config(save_dir):
 if __name__ == '__main__':
     args, cfg = parse_config()
 
-    python_file_path = os.path.dirname(os.path.abspath(__file__))
-    print(python_file_path)
+    # python_file_path = os.path.dirname(os.path.abspath(__file__))
+    # print(python_file_path)
 
     # save_dir = Path("{}/onnx")
-    save_dir = Path(os.path.abspath(os.path.join(python_file_path, '../', 'onnx')))
+    # save_dir = Path(os.path.abspath(os.path.join(python_file_path, '../', 'onnx')))
+    if args.save_dir is None:
+        save_dir = Path(os.path.abspath(__file__)).parent.parent / 'onnx'
+    else:
+        save_dir = Path(args.save_dir)
+
+    # save_dir = Path(args.save_dir)
     if not save_dir.exists():
         save_dir.mkdir(parents=True)
 
