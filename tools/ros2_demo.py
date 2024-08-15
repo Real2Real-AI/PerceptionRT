@@ -1,4 +1,23 @@
-#import _init_path
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import glob
+import argparse
+import array
+import torch
+import numpy as np
+from pathlib import Path
+# from demo import DemoDataset, parse_config
+# from pcdet.models import build_network, load_data_to_gpu
+from general.config.config import cfg, cfg_from_yaml_file
+from general.datasets.dataset_template import DatasetTemplate
+from general.utilities.data_utils import load_data_to_gpu
+# from pcdet.utils import common_utils
+from general.utilities import common_utils
+from object_detection.detectors3d import build_network
+
 import rclpy
 import rclpy.duration
 from rclpy.node import Node
@@ -6,16 +25,6 @@ from sensor_msgs.msg import PointCloud2, PointField
 from std_msgs.msg import ColorRGBA
 from tf_transformations import quaternion_from_euler
 from visualization_msgs.msg import Marker, MarkerArray
-
-import torch, numpy as np
-import array
-from pathlib import Path
-from demo import DemoDataset, parse_config
-# from pcdet.models import build_network, load_data_to_gpu
-from object_detection.detectors3d import build_network
-from general.utilities.data_utils import load_data_to_gpu
-# from pcdet.utils import common_utils
-from general.utilities import common_utils
 
 DUMMY_FIELD_PREFIX = '__'
 type_mappings = [(PointField.INT8, np.dtype('int8')),
@@ -27,6 +36,24 @@ type_mappings = [(PointField.INT8, np.dtype('int8')),
                  (PointField.FLOAT32, np.dtype('float32')),
                  (PointField.FLOAT64, np.dtype('float64'))]
 pftype_to_nptype = dict(type_mappings)
+
+
+def parse_config():
+    parser = argparse.ArgumentParser(description='arg parser')
+    parser.add_argument('--cfg_file', type=str, default='cfgs/waymo_models/centerpoint_pillar_inference.yaml',
+                        help='specify the config for demo')
+    parser.add_argument('--data_path', type=str, default='demo_data',
+                        help='specify the point cloud data file or directory')
+    parser.add_argument('--ckpt', type=str, default='../ckpts/waymo_iou_branch.pth',
+                        help='specify the pretrained model')
+    parser.add_argument('--ext', type=str, default='.npy', help='specify the extension of your point cloud data file')
+
+    args = parser.parse_args()
+
+    cfg_from_yaml_file(args.cfg_file, cfg)
+
+    return args, cfg
+
 
 def fields_to_dtype(fields, point_step):
     '''Convert a list of PointFields to a numpy record datatype.
@@ -54,6 +81,7 @@ def fields_to_dtype(fields, point_step):
 
     return np_dtype_list
 
+
 def pointcloud2_to_array(cloud_msg, squeeze=True):
     ''' Converts a rospy PointCloud2 message to a numpy recordarray
 
@@ -72,21 +100,20 @@ def pointcloud2_to_array(cloud_msg, squeeze=True):
     # remove the dummy fields that were added
     cloud_arr = cloud_arr[
         [fname for fname, _type in dtype_list if not (
-            fname[:len(DUMMY_FIELD_PREFIX)] == DUMMY_FIELD_PREFIX)]]
+                fname[:len(DUMMY_FIELD_PREFIX)] == DUMMY_FIELD_PREFIX)]]
 
     if squeeze and cloud_msg.height == 1:
         return np.reshape(cloud_arr, (cloud_msg.width,))
     else:
         return np.reshape(cloud_arr, (cloud_msg.height, cloud_msg.width))
 
+
 class CenterpointNode(Node):
     def __init__(self):
         super().__init__('centerpoint_node')
         self.get_logger().info('CenterpointNode has been started')
-        self.dataset = DemoDataset(dataset_cfg=cfg.DATA_CONFIG,class_names=cfg.CLASS_NAMES,
-                                   training=False, root_path=Path(args.data_path),
-                                   ext=args.ext, logger=logger)
-        self.iter = iter(self.dataset)
+        self.dataset = DatasetTemplate(dataset_cfg=cfg.DATA_CONFIG, class_names=cfg.CLASS_NAMES,
+                                       training=False, logger=logger)
         self.model = build_network(model_cfg=cfg.MODEL, num_class=len(cfg.CLASS_NAMES), dataset=self.dataset)
         self.model.load_params_from_file(filename=args.ckpt, logger=logger, to_cpu=True)
         self.model.cuda()
@@ -109,7 +136,7 @@ class CenterpointNode(Node):
         self.vis_pub.publish(vis_msg)
         end = self.get_clock().now()
         elapsed = end - start
-        self.get_logger().info(f'Elapsed time: {elapsed.nanoseconds/1e6} ms')
+        self.get_logger().info(f'Elapsed time: {elapsed.nanoseconds / 1e6} ms')
 
     def get_marker(self, pred_dicts: list) -> MarkerArray:
         marker_array_msg = MarkerArray()
@@ -147,34 +174,34 @@ class CenterpointNode(Node):
             marker_array_msg.markers.append(marker)
         return marker_array_msg
 
-    def np2ros(self, point_cloud: np.ndarray) -> PointCloud2:
-        pc_msg = PointCloud2()
-        pc_msg.header.stamp = self.get_clock().now().to_msg()
-        pc_msg.header.frame_id = 'map'
-        pc_msg.height = 1
-        pc_msg.width = point_cloud.shape[0]
-
-        pc_msg.fields = [
-            PointField(name='x', offset=0, datatype=PointField.FLOAT32, count=1),
-            PointField(name='y', offset=4, datatype=PointField.FLOAT32, count=1),
-            PointField(name='z', offset=8, datatype=PointField.FLOAT32, count=1),
-            PointField(name='intensity', offset=12, datatype=PointField.FLOAT32, count=1)
-        ]
-        pc_msg.is_bigendian = False
-        pc_msg.point_step = 16
-        pc_msg.row_step = pc_msg.point_step * pc_msg.width
-
-        memory_view = memoryview(point_cloud)
-        if memory_view.nbytes > 0:
-            array_bytes = memory_view.cast("B")
-        else:
-            # Casting raises a TypeError if the array has no elements
-            array_bytes = b""
-        as_array = array.array("B")
-        as_array.frombytes(array_bytes)
-        pc_msg.data = as_array
-
-        return pc_msg
+    # def np2ros(self, point_cloud: np.ndarray) -> PointCloud2:
+    #     pc_msg = PointCloud2()
+    #     pc_msg.header.stamp = self.get_clock().now().to_msg()
+    #     pc_msg.header.frame_id = 'map'
+    #     pc_msg.height = 1
+    #     pc_msg.width = point_cloud.shape[0]
+    #
+    #     pc_msg.fields = [
+    #         PointField(name='x', offset=0, datatype=PointField.FLOAT32, count=1),
+    #         PointField(name='y', offset=4, datatype=PointField.FLOAT32, count=1),
+    #         PointField(name='z', offset=8, datatype=PointField.FLOAT32, count=1),
+    #         PointField(name='intensity', offset=12, datatype=PointField.FLOAT32, count=1)
+    #     ]
+    #     pc_msg.is_bigendian = False
+    #     pc_msg.point_step = 16
+    #     pc_msg.row_step = pc_msg.point_step * pc_msg.width
+    #
+    #     memory_view = memoryview(point_cloud)
+    #     if memory_view.nbytes > 0:
+    #         array_bytes = memory_view.cast("B")
+    #     else:
+    #         # Casting raises a TypeError if the array has no elements
+    #         array_bytes = b""
+    #     as_array = array.array("B")
+    #     as_array.frombytes(array_bytes)
+    #     pc_msg.data = as_array
+    #
+    #     return pc_msg
 
 
 def main(args=None):
@@ -183,8 +210,8 @@ def main(args=None):
     rclpy.spin(centerpoint_node)
     rclpy.shutdown()
 
+
 if __name__ == '__main__':
     args, cfg = parse_config()
     logger = common_utils.create_logger()
     main()
-

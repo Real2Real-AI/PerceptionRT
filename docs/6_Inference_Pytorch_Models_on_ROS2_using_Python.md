@@ -1,5 +1,4 @@
-
-## (C++) Inference a model with TensorRT on ROS2 Node
+## (Python) Inference a model with Pytorch Models on ROS2 Node
 
 ### 1. Setting ROS2
 - If you are not using a container env, please install ROS2 Foxy:
@@ -17,43 +16,29 @@ sudo pip install transforms3d -y
 
 - If you are using a container env, your container already installed ROS2.
 
-### 2. Build the ROS2 package of centerpoint c++ Node in your ROS2 workspace.
-``` shell
-docker exec -it lidar3d-RT bash
-cd ~/ && mkdir -p ros2_ws/src && cd ros2_ws/ && colcon build --symlink-install
-cd src && ln -s ~/PerceptionRT/tools/ros2/centerpoint/ .
+### 2. Convert Waymo dataset to Rosbag for ROS2
+- You can use two repositories step by step. 
+  - Waymo data ==> Rosbag for ROS1: https://github.com/yukke42/waymo2bag
+    - 첫번째 깃허브로 ROS1 bag 파일로 만든 후
+  - Rosbag for ROS1 ==> Rosbag for ROS2: https://ternaris.gitlab.io/rosbags/topics/convert.html
+    - 2번째 라이브러리로 ros1을 ros2 bag파일로 변환하면 됨
+  
 
-
-```
-- If not exist `centerpoint/models`, copy `onnx` file.
-``` shell
-cd centerpoint && mkdir models
-cd models
-ln -s ~/PerceptionRT/onnx/config.yaml config.yaml
-ln -s ~/PerceptionRT/onnx/model.onnx model.onnx  
-
-ln -s ~/PerceptionRT/onnx/model.onnx model.onnx
-```
-- Build the ROS2 package of centerpoint c++ Node in your ROS2 workspace.
-``` shell
-cd ~/ros2_ws && colcon build --symlink-install
-source ~/ros2_ws/install/setup.bash
-```
-
-### 3. Run the ROS2 Node.
-``` shell
-docker exec -it lidar3d-RT bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch centerpoint centerpoint.launch.py
-```
-
-- Once running ros2 centerpoint node, create tensorRT file to the same folder having onnx file, automatically.
-
-### 4. ROS2 play bagfile on the container
+### 3. ROS2 play bagfile on the container
 ```
 docker exec -it lidar3d-RT bash
 cd /Dataset
 ros2 bag play segment-10359308928573410754_720_000_740_000_with_camera_labels/  # ros2 bag play folder_with_ros2bag
+```
+
+### 4. Run ros2_demo.py on the container
+``` shell
+docker exec -it lidar3d-RT bash
+cd ~/PerceptionRT
+python tools/ros2_demo.py --cfg_file {fullpath/config.yaml} --ckpt {fullpath/pytorch_models.pth}
+python tools/ros2_demo.py --cfg_file ~/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt ~/PerceptionRT/ckpt/checkpoint_epoch_24.pth
+
+
 ```
 
 ### 5. Run rviz2
@@ -61,10 +46,15 @@ ros2 bag play segment-10359308928573410754_720_000_740_000_with_camera_labels/  
 docker exec -it lidar3d-RT bash
 rviz2
 ```
+
+### 6. Setting rviz2
 - Fixed Frame: base_link
 - Add -> By display type -> PountCloud2 -> Topic: /lidar/top/pointcloud, Size(m): 0.03
 - Add -> By topic -> /boxes/MarkerArray
 
-<img src="./sources/rviz2_ros_cpp.png" align="center" width="100%">
+<img src="../sources/rviz2_add_topic.png" align="center" width="359">
+
+### 7. Results with rviz2
+<img src="./sources/rviz2.png" align="center" width="100%">
 
 ## [Return to the main page.](../README.md)
