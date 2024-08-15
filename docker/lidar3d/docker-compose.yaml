@@ -1,17 +1,17 @@
 services:
   openpcdet:
-    image: perception-rt-lidar3d-dev
+    image: perception-rt-lidar3d-dev2
     env_file:
       - .env
     build:
       context: ./
       dockerfile: Dockerfile
       args:
-        BASE_IMAGE: perception-rt-lidar3d-env
+        BASE_IMAGE: perception-rt-lidar3d-env2
         HOST_UID: $HOST_UID
         HOST_GID: $HOST_GID
         HOST_USER: $HOST_USER
-    container_name: lidar3d-RT
+    container_name: lidar3d-RT2
     user: $HOST_UID:$HOST_GID
     volumes:
       - ../../:/home/$HOST_USER/PerceptionRT
