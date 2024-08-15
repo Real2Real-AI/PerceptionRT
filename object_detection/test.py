@@ -236,8 +236,13 @@ def main():
     )
 
     if args.TensorRT:
-        python_file_path = os.path.dirname(os.path.abspath(__file__))
-        onnx_dir = Path(os.path.abspath(os.path.join(python_file_path, '../', 'onnx')))
+        if args.ckpt_dir is None:
+            onnx_dir = Path(os.path.abspath(__file__)).parent.parent / 'onnx'
+        else:
+            onnx_dir = Path(args.ckpt_dir)
+
+        # python_file_path = os.path.dirname(os.path.abspath(__file__))
+        # onnx_dir = Path(os.path.abspath(os.path.join(python_file_path, '../', 'onnx')))
         print('onnx_dir: ', onnx_dir)
 
         model_path = "{}/model.trt".format(onnx_dir)
