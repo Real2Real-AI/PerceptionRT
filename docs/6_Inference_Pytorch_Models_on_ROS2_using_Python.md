@@ -35,9 +35,8 @@ ros2 bag play segment-10359308928573410754_720_000_740_000_with_camera_labels/  
 ``` shell
 docker exec -it lidar3d-RT bash
 cd ~/PerceptionRT
-python tools/ros2_demo.py --cfg_file {fullpath/config.yaml} --ckpt {fullpath/pytorch_models.pth}
-python tools/ros2_demo.py --cfg_file ~/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt ~/PerceptionRT/ckpt/checkpoint_epoch_24.pth
-
+python tools/visualization/ros2rosbag_rviz2.py --cfg_file {fullpath/config.yaml} --ckpt {fullpath/pytorch_models.pth}
+python tools/visualization/ros2rosbag_rviz2.py --cfg_file ~/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt ~/PerceptionRT/ckpt/checkpoint_epoch_24.pth
 
 ```
 

@@ -1,20 +1,13 @@
 import os
 import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-import glob
 import argparse
-import array
 import torch
 import numpy as np
-from pathlib import Path
-# from demo import DemoDataset, parse_config
-# from pcdet.models import build_network, load_data_to_gpu
 from general.config.config import cfg, cfg_from_yaml_file
 from general.datasets.dataset_template import DatasetTemplate
 from general.utilities.data_utils import load_data_to_gpu
-# from pcdet.utils import common_utils
 from general.utilities import common_utils
 from object_detection.detectors3d import build_network
 
