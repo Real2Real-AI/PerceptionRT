@@ -1,6 +1,7 @@
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import argparse
 import datetime
@@ -20,17 +21,16 @@ from general.utilities import common_utils
 from general.utilities import eval_utils
 from object_detection.datasets import build_dataloader
 from object_detection.detectors3d import build_network
+from tools.visualization.visual_utils.open3d_vis_utils import draw_scenes_for_one_frame, open3d_visualization_init
+
+import open3d
 
 try:
-    import object_detection.pycenterpoint as cp
-    # import pycenterpoint as cp
+    import tools.tensorrt.pycenterpoint as cp
 
     print("Pybind imported!!")
 except:
     print("No Pybind!!")
-
-import open3d
-from tools.visualization.visual_utils import open3d_vis_utils as V
 
 
 def parse_config():
@@ -40,7 +40,6 @@ def parse_config():
     parser.add_argument('--npy_dir', type=str,
                         default='./data/waymo/waymo_processed_data_v0_5_0/segment-10017090168044687777_6380_000_6400_000_with_camera_labels',
                         help='a directory with npy files for inference')
-
     args = parser.parse_args()
     return args
 
@@ -61,9 +60,9 @@ def main():
         exit()
 
     if args.onnx_dir is None:
-        onnx_dir = Path(os.path.abspath(__file__)).parent.parent / 'onnx'
+        onnx_dir = Path(os.path.abspath(__file__)).parent.parent.parent / 'onnx'
     else:
-        onnx_dir = Path(args.onnx_dir)
+        onnx_dir = Path(os.path.abspath(args.onnx_dir))
 
     print('onnx_dir: ', onnx_dir)
 
@@ -78,23 +77,24 @@ def main():
     print("************************** load tensorRT *****************************")
     print("**********************************************************************")
 
+    vis, pts, previous_boxes = open3d_visualization_init()
+
     for pc_path in npy_file_list:
         pc = np.load(pc_path)[:, :4]
         pc[:, 3] = np.tanh(pc[:, 3])
-        print(pc.shape)
-        print(pc_path)
         trt_boxes = model.forward(pc)
         pred_dicts = box_to_dict(trt_boxes)
 
-        print(pred_dicts)
-        V.draw_scenes(
-            points=pc,
-            ref_boxes=pred_dicts[0]['pred_boxes'],
-            ref_scores=pred_dicts[0]['pred_scores'],
-            ref_labels=pred_dicts[0]['pred_labels']
-        )
-
-    pass
+        previous_boxes = draw_scenes_for_one_frame(vis=vis,
+                                                   pts=pts,
+                                                   points=pc,
+                                                   ref_boxes=pred_dicts[0]['pred_boxes'],
+                                                   ref_scores=pred_dicts[0]['pred_scores'],
+                                                   ref_labels=pred_dicts[0]['pred_labels'],
+                                                   previous_boxes=previous_boxes)
+        # 프레임 간 딜레이를 위해 대기
+        time.sleep(0.1)
+    vis.destroy_window()
 
 
 if __name__ == '__main__':

@@ -37,7 +37,7 @@ ENV TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9+PTX"
 # OpenPCDet Dependencies
 RUN apt remove python3-blinker -y
 RUN pip install -U pip
-RUN pip install numpy==1.23.0 llvmlite numba tensorboardX easydict pyyaml scikit-image tqdm SharedArray open3d==0.16.0 mayavi av2 kornia==0.6.8 pyquaternion colored
+RUN pip install numpy==1.23.0 llvmlite numba tensorboardX easydict pyyaml scikit-image tqdm SharedArray open3d==0.16.0 av2 kornia==0.6.8 pyquaternion colored
 RUN pip install spconv-cu120
 RUN pip install opencv-python==4.2.0.34
 RUN pip install onnx==1.16.0
