@@ -23,7 +23,8 @@ from object_detection.datasets import build_dataloader
 from object_detection.detectors3d import build_network
 
 try:
-    import pycenterpoint as cp
+    # import pycenterpoint as cp
+    import tools.tensorrt.pycenterpoint as cp
 
     print("Pybind imported!!")
 except:

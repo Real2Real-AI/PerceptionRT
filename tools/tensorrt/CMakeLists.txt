@@ -78,4 +78,5 @@ target_link_libraries(pycenterpoint PRIVATE
   Python3::Python
 )
 
-copy_output(pycenterpoint ../../object_detection)
+#copy_output(pycenterpoint ../../object_detection)
+copy_output(pycenterpoint ./)

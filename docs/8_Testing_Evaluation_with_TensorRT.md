@@ -2,8 +2,7 @@
 ``` shell
 docker exec -it lidar3d-RT bash
 cd ~/PerceptionRT/tools/tensorrt
-cmake -BRelease
-cmake --build Release
+cmake -BRelease && cmake --build Release
 ```
 
 ## Evaluation with TensorRT model
