@@ -1,7 +1,7 @@
 # PerceptionRT
 Open Source for Real-Time 2D/3D Perception
 
-## Proceeding List for Phase #1 - lidar (Centerpoint-pillar)
+## Proceeding List until Phase #2 - lidar (Centerpoint-pillar)
 - [X] Sensor Types
   - [X] Lidar based 3D Object Detection
 - [X] Detection & Tracking
@@ -23,14 +23,22 @@ Open Source for Real-Time 2D/3D Perception
   - [X] tensorRT + ROS2
     - [X] python
     - [X] c++
-- [X] 2D/3D Visualization
-  - [X] ROS2 Rviz 
+  - [X] 2D/3D Visualization
+    - [X] ROS2(Rosbag + rviz2)
+        - [X] python
+        - [X] c++
+    - [X] Open3d + npz files
+      - [X] python
+      - [ ] c++
+    - [ ] Rerun.io + npz files 
+      - [ ] python <-- Currently in progress
+      - [ ] c++
 - [X] Code Refactoring
   - [X] python codes
+  - [X] Remove and clean up duplicate files and codes in the `centerpoint` (cuda, cpp, python) codes for ros2 and pybind11  
 
-## Proceeding List for Phase #2 - lidar (Centerpoint-pillar)
-- [ ] Code Refactoring
-  - [ ] Remove and clean up duplicate files and codes in the `centerpoint` (cuda, cpp, python) codes for ros2 and pybind11
+## To Do List for Phase #3 - lidar
+- [ ] Code Refactoring  
   - [ ] cleaning all codes
   - [ ] add description
   - [ ] add test codes
