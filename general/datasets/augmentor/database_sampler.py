@@ -9,9 +9,8 @@ import SharedArray
 import torch.distributed as dist
 
 from pcdet.ops.iou3d_nms import iou3d_nms_utils
+# from general.pcdet_ops.iou3d_nms import iou3d_nms_utils
 from general.utilities import box_utils, common_utils
-# from general.utilities import box_utils, common_utils, calibration_kitti
-# from pcdet.datasets.kitti.kitti_object_eval_python import kitti_common
 
 class DataBaseSampler(object):
     def __init__(self, root_path, sampler_cfg, class_names, logger=None):
