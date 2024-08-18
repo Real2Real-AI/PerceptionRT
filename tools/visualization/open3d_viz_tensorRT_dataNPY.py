@@ -4,26 +4,13 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import argparse
-import datetime
-import glob
-import re
 import time
 from pathlib import Path
 from general.utilities.file_utils import read_files
 from general.utilities.eval_utils import box_to_dict
 
 import numpy as np
-import torch
-from tensorboardX import SummaryWriter
-
-from general.config.config import cfg, cfg_from_list, cfg_from_yaml_file, log_config_to_file
-from general.utilities import common_utils
-from general.utilities import eval_utils
-from object_detection.datasets import build_dataloader
-from object_detection.detectors3d import build_network
 from tools.visualization.visual_utils.open3d_vis_utils import draw_scenes_for_one_frame, open3d_visualization_init
-
-import open3d
 
 try:
     import tools.tensorrt.pycenterpoint as cp
