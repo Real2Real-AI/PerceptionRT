@@ -2,7 +2,8 @@ import time
 
 import fire
 
-import .kitti_common as kitti
+import object_detection.datasets.kitti.kitti_object_eval_python.kitti_common as kitti
+# import .kitti_common as kitti
 from .eval import get_coco_eval_result, get_official_eval_result
 
 

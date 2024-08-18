@@ -21,8 +21,7 @@ sudo pip install transforms3d -y
 ``` shell
 docker exec -it lidar3d-RT bash
 cd ~/ && mkdir -p ros2_ws/src
-cd ros2_ws/ 
-colcon build --symlink-install
+cd ros2_ws/ && colcon build --symlink-install
 cd src && ln -s ~/PerceptionRT/tools/ros2/centerpoint/ .
 ```
 - If not exist `centerpoint/models`, create directory `centerpoint/models` and copy `onnx` and `config` files.

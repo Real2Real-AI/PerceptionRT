@@ -26,8 +26,7 @@ sudo apt install python3-testresources
 ## Build python-wrapped centerpoint for tensorRT.
 ``` shell
 cd ~/PerceptionRT/tools/tensorrt
-cmake -BRelease
-cmake --build Release
+cmake -BRelease && cmake --build Release
 ```
 
 ## [Return to the main page.](../README.md)
