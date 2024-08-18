@@ -2,46 +2,41 @@
 ## (C++) Inference a model with TensorRT on ROS2 Node
 
 ### 1. Setting ROS2
-- If you are not using a container env, please install ROS2 Foxy:
-```
-sudo apt install software-properties-common libyaml-cpp-dev -y && \
-    sudo add-apt-repository universe && \
-    sudo apt update && sudo apt install curl -y && \
-    sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
-    sudo apt update && \
-    sudo apt install ros-foxy-desktop python3-argcomplete -y && \
-    sudo apt install ros-dev-tools ros-foxy-rqt* ros-foxy-tf-transformations -y
-sudo pip install transforms3d -y
-```
-
+- If you are not using a container env, 
+  - please install ROS2 Humble as follows: 
+    - [Ubuntu (source)](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html)
+    - [Ubuntu (Debian packages)](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
 - If you are using a container env, your container already installed ROS2.
 
 ### 2. Build the ROS2 package of centerpoint c++ Node in your ROS2 workspace.
 ``` shell
 docker exec -it lidar3d-RT bash
-cd ~/ && mkdir -p ros2_ws/src
-cd ros2_ws/ 
-colcon build --symlink-install
+cd ~/ && mkdir -p ros2_humble/src && cd ros2_humble/ && colcon build --symlink-install
 cd src && ln -s ~/PerceptionRT/tools/ros2/centerpoint/ .
 ```
-- If not exist `centerpoint/models`, create directory `centerpoint/models` and copy `onnx` and `config` files.
+
+- If not exist `centerpoint/models`, copy `onnx` file.
 ``` shell
-cd centerpoint && mkdir models && cd models
+cd centerpoint && mkdir models
+cd models
 ln -s ~/PerceptionRT/onnx/config.yaml config.yaml
-ln -s ~/PerceptionRT/onnx/model.onnx model.onnx
+ln -s ~/PerceptionRT/onnx/model.onnx model.onnx  
 ```
 - Build the ROS2 package of centerpoint c++ Node in your ROS2 workspace.
 ``` shell
-cd ~/ros2_ws && colcon build --symlink-install
-source ~/ros2_ws/install/setup.bash
-echo "source /home/lidar3d/ros2_ws/install/setup.bash" >> /home/lidar3d/.bashrc
+cd ~/ros2_humble && colcon build --symlink-install
+
+cd ~/ros2_humble
+colcon build --symlink-install --packages-select centerpoint
+
 source ~/.bashrc
+ros2_ws/install/setup.bash
 ```
 
 ### 3. Run the ROS2 Node.
 ``` shell
 docker exec -it lidar3d-RT bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch centerpoint centerpoint.launch.py
 ```
 

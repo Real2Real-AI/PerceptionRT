@@ -1,4 +1,4 @@
-## Install python-wrapped centerpoint for tensorRT.
+## If you did not build at [Section 3_Setting_Dev_Environments](./3_Setting_Dev_Environments.md), Please build python-wrapped centerpoint for tensorRT.
 ``` shell
 docker exec -it lidar3d-RT bash
 cd ~/PerceptionRT/tools/tensorrt
@@ -15,12 +15,14 @@ python object_detection/test.py --cfg_file {fullpath/config.yaml} --TensorRT --c
 # local
 cd ~/PerceptionRT
 python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT
+python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT --ckpt_dir /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/onnx
 python object_detection/test.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT --ckpt_dir /home/hyunkoo/Dataset/HDD8TB/ttt
 
 # docker
 docker exec -it lidar3d-RT bash
 cd ~/PerceptionRT
 python object_detection/test.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT
+python object_detection/test.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT --ckpt_dir /home/lidar3d/PerceptionRT/onnx
 python object_detection/test.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --TensorRT --ckpt_dir /Dataset/HDD8TB/ttt/
 ```
 - Results as shown:

@@ -20,6 +20,9 @@ set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode arch=compute_89,code=sm_89") 
 #   add_compile_options(-Wall -Wextra -Wpedantic)
 # endif()
 
+# Add the ROS workspace to CMAKE_PREFIX_PATH
+#list(APPEND CMAKE_PREFIX_PATH "/path/to/your/ros_workspace/install")
+
 # find dependencies
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 find_package(ament_cmake REQUIRED)

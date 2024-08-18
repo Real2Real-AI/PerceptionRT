@@ -3,22 +3,29 @@
 - Convert ONNX model file from Pytorch 'pth' model file
 
 ``` shell
-docker exec -it lidar3d-RT bash
+cd ~/PerceptionRT/
+python object_detection/export_onnx.py --cfg_file {full_path/config.yaml} --ckpt {full_path/checkpoint.pth}
+python object_detection/export_onnx.py --cfg_file {full_path/config.yaml} --ckpt {full_path/checkpoint.pth} --save_dir {full_path}
+```
 
+- local
+``` shell
+# local
 pip install onnx==1.16.0 onnxsim==0.4.36 onnxruntime
 
-cd ~/PerceptionRT/
-python tools/export_onnx.py --cfg_file {full_path/config.yaml} --ckpt {full_path/checkpoint.pth}
 python object_detection/export_onnx.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/ckpt/checkpoint_epoch_24.pth
-python object_detection/export_onnx.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/lidar3d/PerceptionRT/ckpt/checkpoint_epoch_24.pth
-
-python object_detection/export_onnx.py --cfg_file {full_path/config.yaml} --ckpt {full_path/checkpoint.pth} --save_dir {full_path}
 python object_detection/export_onnx.py --cfg_file /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/ckpt/checkpoint_epoch_24.pth --save_dir /home/hyunkoo/DATA/HDD8TB/real2realAI/PerceptionRT/onnx
-python object_detection/export_onnx.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/lidar3d/PerceptionRT/ckpt/checkpoint_epoch_24.pth --save_dir /home/lidar3d/PerceptionRT/onnx
-
-
-
 ```
+- docker
+``` shell
+# docker
+docker exec -it lidar3d-RT bash
+pip install onnx==1.16.0 onnxsim==0.4.36 onnxruntime
+
+python object_detection/export_onnx.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/lidar3d/PerceptionRT/ckpt/checkpoint_epoch_24.pth
+python object_detection/export_onnx.py --cfg_file /home/lidar3d/PerceptionRT/tools/cfgs/waymo_models/centerpoint_pillar_train_refactoring.yaml --ckpt /home/lidar3d/PerceptionRT/ckpt/checkpoint_epoch_24.pth --save_dir /home/lidar3d/PerceptionRT/onnx
+```
+
 <img src="./sources/cmd_onnx.png" align="center" width="100%">
 
 - As a result, create 3 onnx files on the `PerceptionRT/onnx`
