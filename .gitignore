@@ -21,7 +21,6 @@ version.py
 *.trt
 Release/
 .vscode/
-pcdet.egg-info/
 ament_**
 CMakeFiles/
 Makefile
@@ -30,3 +29,5 @@ CMakeCache.txt
 cmake_install.cmake
 centerpoint_node
 onnx/
+install/
+ouput/

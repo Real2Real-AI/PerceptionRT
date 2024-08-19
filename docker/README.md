@@ -20,8 +20,7 @@ HOST_USER=lidar3d
 ```````
 - Create the container.
 ``` shell
-cd docker/lidar3d
-docker compose up --build -d
+cd docker/lidar3d && docker compose up --build -d
 ```
 
 - Execute the container

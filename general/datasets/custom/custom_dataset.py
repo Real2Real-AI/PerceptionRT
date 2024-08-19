@@ -7,7 +7,8 @@ import numpy as np
 from pcdet.ops.roiaware_pool3d import roiaware_pool3d_utils
 # from general.utilities import box_utils
 from general.utilities import common_utils
-from general.datasets import DatasetTemplate
+from general.datasets.dataset_template import DatasetTemplate
+# from general.datasets import DatasetTemplate
 
 
 class CustomDataset(DatasetTemplate):
