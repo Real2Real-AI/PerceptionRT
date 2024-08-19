@@ -30,14 +30,15 @@ Open Source for Real-Time 2D/3D Perception
     - [X] Open3d + npz files
       - [X] python
       - [ ] c++
-    - [ ] Rerun.io + npz files 
-      - [ ] python <-- Currently in progress
-      - [ ] c++
 - [X] Code Refactoring
   - [X] python codes
   - [X] Remove and clean up duplicate files and codes in the `centerpoint` (cuda, cpp, python) codes for ros2 and pybind11  
 
 ## To Do List for Phase #3 - lidar
+- [ ] 2D/3D Visualization
+  - [ ] Rerun.io + npz files 
+      - [ ] python
+      - [ ] c++- 
 - [ ] Code Refactoring  
   - [ ] cleaning all codes
   - [ ] add description
